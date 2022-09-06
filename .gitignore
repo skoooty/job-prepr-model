@@ -1,5 +1,29 @@
-.DS_Store
-.env
+
 job_prepr_model/api/__pycache__/
 job_prepr_model/ml_logic/__pycache__/
 mlruns/
+
+.env
+.env.yaml
+
+# System files
+.DS_Store
+.ipynb_checkpoints
+*.pyc
+*.swp
+build/
+dist/
+.coverage
+*.iml
+*.egg-info
+*.vscode
+
+# Data files
+*.csv
+*.sqlite
+*.zip
+training_outputs/
+
+*.sublime-project
+*.sublime-workspace
+**/*.code-workspace
