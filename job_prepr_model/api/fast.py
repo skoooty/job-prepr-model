@@ -1,10 +1,10 @@
 import numpy as np
 import json
-import requests
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from job_prepr_model.ml_logic.registry import load_model
 
+#Instanciate API
 app = FastAPI()
 
 app.add_middleware(
@@ -15,16 +15,13 @@ app.add_middleware(
     allow_headers=["*"],  # Allows all headers
 )
 
+#Load model on API launch
 app.state.model = load_model()
 
-@app.route('/predict', methods=['POST'])
-def predict():
-    data = request.json
-    params = data['params']
-    arr = np.fromstring(data['arr'],dtype=float).reshape(48,48,1)
-    pred = app.state.model.predict(arr)
-    return pred
-
-@app.get('/hello')
-def test():
-    return 'Hello'
+@app.post("/predict")
+async def predict(array: Request):
+    """Return a prediction from a webrtc frame"""
+    data = await array.json()
+    arr = np.array(eval(data))
+    pred = app.state.model.predict(arr.reshape(1,48,48,1))
+    return pred.tolist()
