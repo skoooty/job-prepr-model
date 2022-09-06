@@ -2,8 +2,11 @@ import pandas as pd
 import numpy as np
 from keras.preprocessing.image import load_img, img_to_array
 import os
+from job_prepr_model.ml_logic.params import LOCAL_DATA_PATH
 
-train_path = "/home/skoooty/code/skoooty/job-prepr-data/train/train"
+
+
+train_path = os.path.join(LOCAL_DATA_PATH, 'train')
 test_path = "/Users/andrei/code/images/images/validation"
 val_path = "~/code/images/images/val"
 

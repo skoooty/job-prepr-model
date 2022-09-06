@@ -9,3 +9,5 @@ uvicorn
 python_dotenv
 
 ipdb
+colorama
+mlflow

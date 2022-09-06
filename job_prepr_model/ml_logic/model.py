@@ -37,12 +37,13 @@ def train_model(model,
                 y,
                 batch_size=64,
                 patience = 2,
-                validation_split=0.2
+                validation_split=0.2,
+                epochs=500
                 ):
     history = model.fit(X, y,
-              batch_size=batch_size, epochs = 1000,
+              batch_size=batch_size, epochs = epochs,
               callbacks=[EarlyStopping(patience = patience, restore_best_weights= True, monitor = "val_accuracy", mode = "max")],
-              validation_split = validation_split, verbose = 1)
+              validation_split = validation_split, shuffle = True, verbose = 1)
 
     return model, history
 
