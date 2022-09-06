@@ -1,3 +1,4 @@
+
 from job_prepr_model.ml_logic.params import LOCAL_REGISTRY_PATH
 
 import mlflow

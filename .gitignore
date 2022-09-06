@@ -1,3 +1,8 @@
+
+job_prepr_model/api/__pycache__/
+job_prepr_model/ml_logic/__pycache__/
+mlruns/
+
 .env
 .env.yaml
 
