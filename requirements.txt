@@ -1,9 +1,11 @@
 pandas
 numpy
-tensorflow
+tensorflow==2.7.0
 matplotlib
 notebook
 sklearn
 fastapi
 uvicorn
 python_dotenv
+
+ipdb

@@ -3,7 +3,7 @@ import numpy as np
 from keras.preprocessing.image import load_img, img_to_array
 import os
 
-train_path = "/Users/andrei/code/images/images/train"
+train_path = "/home/skoooty/code/skoooty/job-prepr-data/train/train"
 test_path = "/Users/andrei/code/images/images/validation"
 val_path = "~/code/images/images/val"
 
@@ -18,4 +18,4 @@ def load_data():
                 img = load_img(os.path.join(os.path.join(train_path, folder_path), image_path), color_mode = "grayscale")
                 X_train.append(img_to_array(img))
                 y_train.append(os.path.basename(os.path.normpath(folder_path)))
-    return X_train, y_train
+    return np.array(X_train), np.array(y_train)

@@ -2,9 +2,7 @@ from tensorflow.keras.layers.experimental.preprocessing import Rescaling
 from tensorflow.keras import layers, models
 from tensorflow.keras.callbacks import EarlyStopping
 
-from job_prepr_model.ml_logic.data import load_data
 
-X_train, y_train = load_data()
 
 def initialize_model():
 
@@ -28,7 +26,7 @@ def initialize_model():
     model.add(layers.Dense(7, activation='softmax'))
     return model
 
-def compile_model(model, learning_rate):
+def compile_model(model, learning_rate=0.01):
    model.compile(loss='categorical_crossentropy',
               optimizer='adam',
               metrics=['accuracy'])
