@@ -2,7 +2,7 @@ pandas
 numpy
 tensorflow
 matplotlib
-jupyternotebook
+notebook
 sklearn
 fastapi
 uvicorn
