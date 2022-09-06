@@ -12,6 +12,17 @@ PREFECT_FLOW_NAME=os.environ.get("PREFECT_FLOW_NAME")
 PREFECT_LOG_LEVEL=os.environ.get("PREFECT_LOG_LEVEL")
 PREFECT_PROJECT_NAME=os.environ.get("PREFECT_PROJECT_NAME")
 
+gridsearch_params = {
+    # total number of combinations: 1296
+    optimizer : ["adam"],
+    maxpooling2d : [2, 3, 4],
+    activation_for_hidden : ["relu", "tanh"],
+    kernel_size : [(3, 3)],
+    last_dense_layer_neurons : [80, 90, 100, 110, 120],
+    batch_size : [8, 16, 32, 64],
+    earlystopping_patience : [50]
+}
+
 y_label_dict = {
     'angry':0,
     'disgust':1,
