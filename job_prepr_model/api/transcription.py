@@ -1,6 +1,13 @@
 from google.cloud import speech_v1 as speech
+from fastapi import FastAPI, UploadFile
+from transformers import AutoTokenizer, TFAutoModelForSequenceClassification, Trainer
 import io
 import os
+import json
+from pydub import AudioSegment
+
+app = FastAPI()
+app.state.tokenizer, app.state.model = load_nlp()
 
 def transcribe(source):
     """Transcribe the given audio file from a local or bucket path"""
@@ -26,3 +33,19 @@ def transcribe(source):
         best_alternative = result.alternatives[0]
     transcript = best_alternative.transcript
     return transcript
+
+def load_nlp():
+    model_name = "siebert/sentiment-roberta-large-english"
+    tokenizer = AutoTokenizer.from_pretrained(model_name)
+    model = TFAutoModelForSequenceClassification.from_pretrained(model_name)
+    return tokenizer, model
+
+def mp3_to_wav(audio):
+    sound = AudioSegment.from_mp3(audio)
+    sound.export(dst, format="wav")
+
+@app.post("/predict-nlp")
+async def predict_nlp(audio : UploadFile):
+    pred_text = transcribe(audio)
+    tokenized_texts = app.state.tokenizer(pred_text,truncation=True,padding=True)
+    print(app.state.model.predict(tokenized_texts))
