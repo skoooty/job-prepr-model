@@ -1,7 +1,9 @@
 pandas
 numpy
+
 protobuf==3.20.1
 tensorflow==2.8.0
+
 matplotlib
 notebook
 sklearn
@@ -12,4 +14,9 @@ python_dotenv
 ipdb
 colorama
 mlflow
+
 google-cloud-storage
+
+
+google-cloud-speech
+
