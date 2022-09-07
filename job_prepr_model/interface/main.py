@@ -35,8 +35,7 @@ def train(mode='hd'):
         X, y = load_train_data()
         y_cat = label_encode(y)
     else:
-        X=load_train_data_hd()[0]
-        y_cat=load_train_data_hd()[1]
+        X=load_train_data_hd()
         validation_data=load_validation_data_hd()
 
     #import ipdb; ipdb.set_trace()
@@ -50,14 +49,20 @@ def train(mode='hd'):
                      last_dense_layer_neurons_2=100,
                      )
     model = compile_model(model, learning_rate)
-    model, history = train_model(model, X, y_cat,
-                                  batch_size=batch_size,
-                                  validation_split=validation_split,
-                                  epochs=epochs,
-                                  mode='hd',
-                                  validation_data=validation_data
-                                  )
-
+    if model !='hd':
+        model, history = train_model(model, X, y_cat,
+                                    batch_size=batch_size,
+                                    validation_split=validation_split,
+                                    epochs=epochs
+                                    )
+    else:
+        model, history = train_model(model, X,
+                                    batch_size=batch_size,
+                                    validation_split=validation_split,
+                                    epochs=epochs,
+                                    mode='hd',
+                                    validation_data=validation_data
+                                    )
     params = dict(
         # model parameters
         learning_rate=learning_rate,
