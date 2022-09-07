@@ -29,3 +29,4 @@ training_outputs/
 **/*.code-workspace
 
 .python_version
+nohup.out
