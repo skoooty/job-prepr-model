@@ -31,7 +31,7 @@ def train(mode='hd'):
     from job_prepr_model.ml_logic.registry import load_model, save_model
 
     y_cat = None
-    y-None
+    y=None
 
 
     if mode!='hd':
