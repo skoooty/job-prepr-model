@@ -33,10 +33,11 @@ def train(mode='hd'):
 
     if mode!='hd':
         X, y = load_train_data()
-        y_cat_len = 8
+        y_cat_len = label_encode(y)[0].shape[0]
     else:
         X=load_train_data_hd()
-        y_cat_len = label_encode(y)[0].shape[0]
+        y_cat_len = 8
+
 
     validation_data=load_validation_data_hd()
     y_cat = label_encode(y)
