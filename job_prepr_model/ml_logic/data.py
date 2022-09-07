@@ -8,7 +8,7 @@ from job_prepr_model.ml_logic.params import LOCAL_DATA_PATH_HD
 
 #Import for HD data
 from keras.preprocessing.image_dataset import image_dataset_from_directory
-import tensorflow_datasets as tfds
+#import tensorflow_datasets as tfds
 import numpy as np
 
 train_path = os.path.join(LOCAL_DATA_PATH, 'train')
