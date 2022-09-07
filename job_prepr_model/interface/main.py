@@ -30,6 +30,9 @@ def train(mode='hd'):
     from job_prepr_model.ml_logic.registry import get_model_version
     from job_prepr_model.ml_logic.registry import load_model, save_model
 
+    y_cat = None
+    y-None
+
 
     if mode!='hd':
         X, y = load_train_data()
@@ -40,6 +43,7 @@ def train(mode='hd'):
         X=load_train_data_hd()
         y_cat_len = 8
         Xshape = (100, 100, 1)
+
 
 
     validation_data=load_validation_data_hd()
@@ -56,6 +60,7 @@ def train(mode='hd'):
                      last_dense_layer_neurons_2=100,
                      )
     model = compile_model(model, learning_rate)
+
     if model !='hd':
         model, history = train_model(model, X, y_cat,
                                     batch_size=batch_size,
