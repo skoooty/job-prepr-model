@@ -3,9 +3,17 @@ import numpy as np
 from keras.preprocessing.image import load_img, img_to_array
 import os
 from job_prepr_model.ml_logic.params import LOCAL_DATA_PATH
+from job_prepr_model.ml_logic.params import LOCAL_DATA_PATH_HD
+
+
+#Import for HD data
+from keras.preprocessing.image_dataset import image_dataset_from_directory
+import tensorflow_datasets as tfds
+import numpy as np
 
 train_path = os.path.join(LOCAL_DATA_PATH, 'train')
 test_path = os.path.join(LOCAL_DATA_PATH, 'validation')
+hd_path = os.path.join(LOCAL_DATA_PATH_HD,'archive')
 #val_path = "~/code/images/images/val"
 
 def load_data(data_path):
@@ -29,3 +37,29 @@ def load_train_data():
 def load_test_data():
 
     return load_data(test_path)
+
+def load_train_data_hd():
+    training_data = image_dataset_from_directory(
+        hd_path,
+        labels='inferred',
+        label_mode='categorical',
+        color_mode='grayscale',
+        image_size=(100, 100),
+        validation_split=0.2,
+        subset='training',
+        seed=0
+    )
+    return training_data
+
+def load_validation_data_hd():
+    validation_data = image_dataset_from_directory(
+        hd_path,
+        labels='inferred',
+        label_mode='categorical',
+        color_mode='grayscale',
+        image_size=(100, 100),
+        validation_split=0.2,
+        subset='validation',
+        seed=0
+    )
+    return validation_data

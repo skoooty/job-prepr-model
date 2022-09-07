@@ -4,7 +4,7 @@ from tensorflow.keras.callbacks import EarlyStopping
 
 
 
-def initialize_model(x,y_cat,
+def initialize_model(X,y_cat,
                      maxpooling2d=2,
                      activation_for_hidden='relu',
                      kernel_size=(3,3),
@@ -16,7 +16,7 @@ def initialize_model(x,y_cat,
     model = models.Sequential()
 
     # Notice this cool new layer that "pipe" your rescaling within the architecture
-    model.add(Rescaling(1./255, input_shape=x[0].shape))
+    model.add(Rescaling(1./255, input_shape=X[0].shape))
 
     # Lets add 3 convolution layers, with relatively large kernel size as our pictures are quite big too
     model.add(layers.Conv2D(50, kernel_size=kernel_size, activation=activation_for_hidden))
@@ -51,12 +51,18 @@ def train_model(model,
                 batch_size=64,
                 patience = 2,
                 validation_split=0.2,
-                epochs=500
+                epochs=500,
+                mode='hd',
+                validation_data=None
                 ):
-    history = model.fit(X, y,
-              batch_size=batch_size, epochs = epochs,
-              callbacks=[EarlyStopping(patience = patience, restore_best_weights= True, monitor = "val_accuracy", mode = "max")],
-              validation_split = validation_split, shuffle = True, verbose = 1)
+    if mode != 'hd':
+        history = model.fit(X, y,
+                batch_size=batch_size, epochs = epochs,
+                callbacks=[EarlyStopping(patience = patience, restore_best_weights= True, monitor = "val_accuracy", mode = "max")],
+                validation_split = validation_split, shuffle = True, verbose = 1)
+    else:
+        model.fit(X, epochs = epochs, validation_data=validation_data,
+      callbacks=[EarlyStopping(patience = patience, restore_best_weights= True, monitor = "val_accuracy", mode = "max")], shuffle = True)
 
     return model, history
 
