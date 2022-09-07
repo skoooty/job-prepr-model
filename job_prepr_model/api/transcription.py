@@ -4,17 +4,20 @@ from google.cloud import speech_v1 as speech
 def speech_to_text(config, audio):
     client = speech.SpeechClient()
     response = client.recognize(config=config, audio=audio)
-    print_sentences(response)
-
-
-def print_sentences(response):
     for result in response.results:
         best_alternative = result.alternatives[0]
-        transcript = best_alternative.transcript
-        confidence = best_alternative.confidence
-        print("-" * 80)
-        print(f"Transcript: {transcript}")
-        print(f"Confidence: {confidence:.0%}")
+    transcript = best_alternative.transcript
+    return transcript
+
+
+# def print_sentences(response):
+#     for result in response.results:
+#         best_alternative = result.alternatives[0]
+#         transcript = best_alternative.transcript
+#         confidence = best_alternative.confidence
+#         print("-" * 80)
+#         print(f"Transcript: {transcript}")
+#         print(f"Confidence: {confidence:.0%}")
 
 
 #Example call to api
@@ -22,4 +25,5 @@ def print_sentences(response):
 config = dict(language_code="en-UK")
 config.update(dict(enable_automatic_punctuation=True))
 audio = dict(uri="gs://cloud-samples-data/speech/brooklyn_bridge.flac")
+speech_to_text(config, audio)
 '''
