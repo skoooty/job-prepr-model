@@ -12,4 +12,8 @@ ipdb
 colorama
 mlflow
 
+#for nlp
 google-cloud-speech
+transformers
+ffmpeg
+pydub
