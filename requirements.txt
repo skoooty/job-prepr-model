@@ -1,6 +1,6 @@
 pandas
 numpy
-tensorflow==2.7.0
+#tensorflow==2.7.0
 matplotlib
 notebook
 sklearn
