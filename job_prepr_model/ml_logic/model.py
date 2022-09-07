@@ -5,6 +5,7 @@ from tensorflow.keras.callbacks import EarlyStopping
 
 
 def initialize_model(X,y_cat_len,
+                     Xshape,
                      maxpooling2d=2,
                      activation_for_hidden='relu',
                      kernel_size=(3,3),
@@ -16,7 +17,7 @@ def initialize_model(X,y_cat_len,
     model = models.Sequential()
 
     # Notice this cool new layer that "pipe" your rescaling within the architecture
-    model.add(Rescaling(1./255, input_shape=X[0].shape))
+    model.add(Rescaling(1./255, input_shape=Xshape))
 
     # Lets add 3 convolution layers, with relatively large kernel size as our pictures are quite big too
     model.add(layers.Conv2D(50, kernel_size=kernel_size, activation=activation_for_hidden))

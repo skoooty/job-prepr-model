@@ -34,17 +34,20 @@ def train(mode='hd'):
     if mode!='hd':
         X, y = load_train_data()
         y_cat_len = label_encode(y)[0].shape[0]
+        Xshape = (48, 48, 1)
+        y_cat = label_encode(y)
     else:
         X=load_train_data_hd()
         y_cat_len = 8
+        Xshape = (100, 100, 1)
 
 
     validation_data=load_validation_data_hd()
-    #y_cat = label_encode(y)
+    #
 
     #import ipdb; ipdb.set_trace()
 
-    model = initialize_model(X,y_cat_len,
+    model = initialize_model(X,y_cat_len,Xshape,
                      maxpooling2d=2,
                      activation_for_hidden='relu',
                      kernel_size=(3,3),
