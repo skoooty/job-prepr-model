@@ -26,7 +26,7 @@ def train():
 
     #import ipdb; ipdb.set_trace()
 
-    model = initialize_model()
+    model = initialize_model(X,y_cat)
     model = compile_model(model, learning_rate)
     model, history = train_model(model, X, y_cat,
                                   batch_size=batch_size,

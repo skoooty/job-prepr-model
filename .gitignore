@@ -27,3 +27,5 @@ training_outputs/
 *.sublime-project
 *.sublime-workspace
 **/*.code-workspace
+
+.python_version
