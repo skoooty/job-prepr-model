@@ -1,20 +1,15 @@
-from transformers import AutoTokenizer, TFAutoModelForSequenceClassification
-from fastapi import FastAPI, UploadFile
-from api.transcription import transcribe
+from transformers import pipeline
+from fastapi import FastAPI, Request
 
 app = FastAPI()
-app.state.tokenizer, app.state.model = load_nlp()
+app.state.model = pipeline('sentiment-analysis', model='siebert/sentiment-roberta-large-english')
 
-def load_nlp():
-    model_name = "siebert/sentiment-roberta-large-english"
-    tokenizer = AutoTokenizer.from_pretrained(model_name)
-    model = TFAutoModelForSequenceClassification.from_pretrained(model_name)
-    return tokenizer, model
+@app.get("/hello")
+def hello():
+    return 'hello'
 
-@app.post("/predict-nlp")
-async def predict_nlp(audio : UploadFile):
-    with io.open(audio, "rb") as audio_file:
-            content = audio_file.read()
-    pred_text = transcribe(content)
-    tokenized_texts = app.state.tokenizer(pred_text,truncation=True,padding=True)
-    print(app.state.model.predict(tokenized_texts))
+
+@app.get("/predictnlp")
+async def predict_nlp(text):
+    print(app.state.model(text))
+    return app.state.model(text)
