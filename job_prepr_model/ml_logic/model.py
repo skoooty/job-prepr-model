@@ -4,7 +4,7 @@ from tensorflow.keras.callbacks import EarlyStopping
 
 
 
-def initialize_model(X,y_cat,
+def initialize_model(X,y_cat_len,
                      maxpooling2d=2,
                      activation_for_hidden='relu',
                      kernel_size=(3,3),
@@ -36,7 +36,7 @@ def initialize_model(X,y_cat,
     model.add(layers.Flatten())
     model.add(layers.Dense(last_dense_layer_neurons_1, activation='relu'))
     model.add(layers.Dense(last_dense_layer_neurons_2, activation='relu'))
-    model.add(layers.Dense(y_cat[0].shape[0], activation='softmax'))
+    model.add(layers.Dense(y_cat_len, activation='softmax'))
     return model
 
 def compile_model(model, learning_rate=0.01):
