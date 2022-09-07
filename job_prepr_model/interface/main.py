@@ -40,7 +40,7 @@ def train(mode='hd'):
 
 
     validation_data=load_validation_data_hd()
-    y_cat = label_encode(y)
+    #y_cat = label_encode(y)
 
     #import ipdb; ipdb.set_trace()
 
