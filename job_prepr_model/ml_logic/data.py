@@ -12,6 +12,7 @@ from tensorflow.keras.preprocessing import image_dataset_from_directory
 #import tensorflow_datasets as tfds
 import numpy as np
 
+
 train_path = os.path.join(LOCAL_DATA_PATH, 'train')
 test_path = os.path.join(LOCAL_DATA_PATH, 'validation')
 hd_path = os.path.join(LOCAL_DATA_PATH_HD,'archive')
@@ -39,7 +40,7 @@ def load_test_data():
 
     return load_data(test_path)
 
-def load_train_data_hd():
+def load_train_data_hd(sample=None):
     training_data = image_dataset_from_directory(
         hd_path,
         labels='inferred',
@@ -50,9 +51,14 @@ def load_train_data_hd():
         subset='training',
         seed=0
     )
-    return training_data
+    if sample:
+        data = training_data.take(3000)
+    else:
+        data = training_data
 
-def load_validation_data_hd():
+    return data
+
+def load_validation_data_hd(sample=None):
     validation_data = image_dataset_from_directory(
         hd_path,
         labels='inferred',
@@ -63,4 +69,9 @@ def load_validation_data_hd():
         subset='validation',
         seed=0
     )
-    return validation_data
+    if sample:
+        data = validation_data.take(sample)
+    else:
+        data = validation_data
+
+    return data

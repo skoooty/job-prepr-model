@@ -21,6 +21,9 @@ kernel_size_detail=gridsearch_params['kernel_size_detail'][-1]
 last_dense_layer_neurons1=100 #gridsearch_params['last_dense_layer_neurons1'][-1]
 last_dense_layer_neurons2=30 #gridsearch_params['last_dense_layer_neurons2'][-1]
 
+train_sample = 5000 #None
+val_sample = 1000 #None
+
 
 def train(mode='hd'):
     from job_prepr_model.ml_logic.model import (initialize_model, compile_model, train_model)
@@ -40,13 +43,13 @@ def train(mode='hd'):
         Xshape = (48, 48, 1)
         y_cat = label_encode(y)
     else:
-        X=load_train_data_hd()
+        X=load_train_data_hd(sample=train_sample)
         y_cat_len = 8
         Xshape = (100, 100, 1)
 
 
 
-    validation_data=load_validation_data_hd()
+    validation_data=load_validation_data_hd(sample=val_sample)
     #
 
     #import ipdb; ipdb.set_trace()
@@ -70,7 +73,7 @@ def train(mode='hd'):
     else:
         model, history = train_model(model, X,
                                     batch_size=batch_size,
-                                    validation_split=validation_split,
+                                    #validation_split=validation_split,
                                     epochs=epochs,
                                     mode='hd',
                                     validation_data=validation_data
