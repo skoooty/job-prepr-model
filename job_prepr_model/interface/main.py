@@ -22,11 +22,11 @@ last_dense_layer_neurons1=100 #gridsearch_params['last_dense_layer_neurons1'][-1
 last_dense_layer_neurons2=30 #gridsearch_params['last_dense_layer_neurons2'][-1]
 activation_for_hidden=gridsearch_params['activation_for_hidden'][-1]
 
-dataset_sample = 0.2
 
 
 
-def train(mode='hd'):
+
+def train(mode='hd', sample=None):
     from job_prepr_model.ml_logic.model import (initialize_model, compile_model, train_model)
     from job_prepr_model.ml_logic.data import (load_train_data, load_train_data_hd, load_validation_data_hd)
 
@@ -34,8 +34,11 @@ def train(mode='hd'):
     from job_prepr_model.ml_logic.registry import get_model_version
     from job_prepr_model.ml_logic.registry import load_model, save_model
 
+    dataset_sample = sample
+
     y_cat = None
     y=None
+
 
 
     if mode!='hd':
@@ -67,7 +70,7 @@ def train(mode='hd'):
 
     #import ipdb; ipdb.set_trace()
 
-    if model !='hd':
+    if mode !='hd':
         model, history = train_model(model, X, y_cat,
                                     batch_size=batch_size,
                                     validation_split=validation_split,

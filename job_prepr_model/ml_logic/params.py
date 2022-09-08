@@ -12,6 +12,7 @@ PREFECT_BACKEND=os.environ.get("PREFECT_BACKEND")
 PREFECT_FLOW_NAME=os.environ.get("PREFECT_FLOW_NAME")
 PREFECT_LOG_LEVEL=os.environ.get("PREFECT_LOG_LEVEL")
 PREFECT_PROJECT_NAME=os.environ.get("PREFECT_PROJECT_NAME")
+HD_BATCH_SIZE=os.environ.get("HD_BATCH_SIZE")
 
 gridsearch_params = {
     # total number of combinations: 1296
@@ -26,7 +27,7 @@ gridsearch_params = {
     'earlystopping_patience': [5]
 }
 
-batch_size = 128
+batch_size = int(HD_BATCH_SIZE)
 
 y_label_dict = {
     'angry':0,
