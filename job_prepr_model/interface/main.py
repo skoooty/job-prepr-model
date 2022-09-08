@@ -13,7 +13,7 @@ learning_rate = 0.001
 batch_size = gridsearch_params['batch_size'][-1]
 patience = gridsearch_params['earlystopping_patience'][-1]
 validation_split = 0.2
-epochs=500
+epochs=90
 
 maxpooling2d=gridsearch_params['maxpooling2d'][-1]
 kernel_size=gridsearch_params['kernel_size'][-1]
