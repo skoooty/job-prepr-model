@@ -21,8 +21,8 @@ kernel_size_detail=gridsearch_params['kernel_size_detail'][-1]
 last_dense_layer_neurons1=100 #gridsearch_params['last_dense_layer_neurons1'][-1]
 last_dense_layer_neurons2=30 #gridsearch_params['last_dense_layer_neurons2'][-1]
 
-train_sample = 5000 #None
-val_sample = 1000 #None
+train_sample = None
+val_sample = None
 
 
 def train(mode='hd'):
