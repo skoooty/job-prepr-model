@@ -4,26 +4,40 @@ from tensorflow.keras.callbacks import EarlyStopping
 
 
 
-def initialize_model():
+def initialize_model(X,y_cat_len,
+                     Xshape,
+                     maxpooling2d=2,
+                     activation_for_hidden='relu',
+                     kernel_size=(3,3),
+                     kernel_size_detail=(2,2),
+                     last_dense_layer_neurons_1=100,
+                     last_dense_layer_neurons_2=100,
+                     ):
 
     model = models.Sequential()
 
     # Notice this cool new layer that "pipe" your rescaling within the architecture
-    model.add(Rescaling(1./255, input_shape=(48, 48, 1)))
+    model.add(Rescaling(1./255, input_shape=Xshape))
 
     # Lets add 3 convolution layers, with relatively large kernel size as our pictures are quite big too
-    model.add(layers.Conv2D(16, kernel_size=5, activation='relu'))
-    model.add(layers.MaxPooling2D(3))
+    model.add(layers.Conv2D(50, kernel_size=kernel_size, activation=activation_for_hidden))
+    model.add(layers.Conv2D(50, kernel_size=kernel_size, activation=activation_for_hidden))
+    model.add(layers.Dropout(.4))
+    model.add(layers.MaxPooling2D(maxpooling2d))
 
-    model.add(layers.Conv2D(32, kernel_size=3, activation="relu"))
-    model.add(layers.MaxPooling2D(3))
+    model.add(layers.Conv2D(30, kernel_size=kernel_size, activation=activation_for_hidden))
+    model.add(layers.Conv2D(30, kernel_size=kernel_size, activation=activation_for_hidden))
+    model.add(layers.Dropout(.4))
+    model.add(layers.MaxPooling2D(maxpooling2d))
 
-    model.add(layers.Conv2D(32, kernel_size=2, activation="relu"))
-    model.add(layers.MaxPooling2D(3))
+    model.add(layers.Conv2D(20, kernel_size=kernel_size_detail, activation=activation_for_hidden))
+    model.add(layers.Conv2D(20, kernel_size=kernel_size_detail, activation=activation_for_hidden))
+    model.add(layers.Dropout(.4))
 
     model.add(layers.Flatten())
-    model.add(layers.Dense(100, activation='relu'))
-    model.add(layers.Dense(7, activation='softmax'))
+    model.add(layers.Dense(last_dense_layer_neurons_1, activation='relu'))
+    model.add(layers.Dense(last_dense_layer_neurons_2, activation='relu'))
+    model.add(layers.Dense(y_cat_len, activation='softmax'))
     return model
 
 def compile_model(model, learning_rate=0.01):
@@ -38,12 +52,18 @@ def train_model(model,
                 batch_size=64,
                 patience = 2,
                 validation_split=0.2,
-                epochs=500
+                epochs=500,
+                mode='hd',
+                validation_data=None
                 ):
-    history = model.fit(X, y,
-              batch_size=batch_size, epochs = epochs,
-              callbacks=[EarlyStopping(patience = patience, restore_best_weights= True, monitor = "val_accuracy", mode = "max")],
-              validation_split = validation_split, shuffle = True, verbose = 1)
+    if mode != 'hd':
+        history = model.fit(X, y,
+                batch_size=batch_size, epochs = epochs,
+                callbacks=[EarlyStopping(patience = patience, restore_best_weights= True, monitor = "val_accuracy", mode = "max")],
+                validation_split = validation_split, shuffle = True, verbose = 1)
+    else:
+        model.fit(X, epochs = epochs, validation_data=validation_data,
+      callbacks=[EarlyStopping(patience = patience, restore_best_weights= True, monitor = "val_accuracy", mode = "max")], shuffle = True)
 
     return model, history
 
