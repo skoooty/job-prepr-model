@@ -18,8 +18,8 @@ epochs=500
 maxpooling2d=gridsearch_params['maxpooling2d'][-1]
 kernel_size=gridsearch_params['kernel_size'][-1]
 kernel_size_detail=gridsearch_params['kernel_size_detail'][-1]
-maxpoolinlast_dense_layer_neurons1g2d=gridsearch_params['last_dense_layer_neurons1'][-1]
-last_dense_layer_neurons2=gridsearch_params['last_dense_layer_neurons2'][-1]
+last_dense_layer_neurons1=100 #gridsearch_params['last_dense_layer_neurons1'][-1]
+last_dense_layer_neurons2=30 #gridsearch_params['last_dense_layer_neurons2'][-1]
 
 
 def train(mode='hd'):
@@ -52,12 +52,12 @@ def train(mode='hd'):
     #import ipdb; ipdb.set_trace()
 
     model = initialize_model(X,y_cat_len,Xshape,
-                     maxpooling2d=2,
+                     maxpooling2d=maxpooling2d,
                      activation_for_hidden='relu',
-                     kernel_size=(3,3),
-                     kernel_size_detail=(2,2),
-                     last_dense_layer_neurons_1=100,
-                     last_dense_layer_neurons_2=100,
+                     kernel_size=kernel_size,
+                     kernel_size_detail=kernel_size_detail,
+                     last_dense_layer_neurons_1=last_dense_layer_neurons1,
+                     last_dense_layer_neurons_2=last_dense_layer_neurons2,
                      )
     model = compile_model(model)
 
