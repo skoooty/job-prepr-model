@@ -2,6 +2,9 @@ from tensorflow.keras.layers.experimental.preprocessing import Rescaling
 from tensorflow.keras import layers, models
 from tensorflow.keras.callbacks import EarlyStopping
 
+from tensorflow.keras.optimizers.schedules import ExponentialDecay
+from tensorflow.keras.optimizers import Adam
+
 
 
 def initialize_model(X,y_cat_len,
@@ -40,9 +43,16 @@ def initialize_model(X,y_cat_len,
     model.add(layers.Dense(y_cat_len, activation='softmax'))
     return model
 
-def compile_model(model, learning_rate=0.01):
+lr_schedule = ExponentialDecay(
+    initial_learning_rate=1e-2,
+    decay_steps=10000,
+    decay_rate=0.9)
+
+adam_optimizer = Adam(learning_rate=lr_schedule)
+
+def compile_model(model):
    model.compile(loss='categorical_crossentropy',
-              optimizer='adam',
+              optimizer=adam_optimizer,
               metrics=['accuracy'])
    return model
 
@@ -62,8 +72,9 @@ def train_model(model,
                 callbacks=[EarlyStopping(patience = patience, restore_best_weights= True, monitor = "val_accuracy", mode = "max")],
                 validation_split = validation_split, shuffle = True, verbose = 1)
     else:
-        model.fit(X, epochs = epochs, validation_data=validation_data,
-      callbacks=[EarlyStopping(patience = patience, restore_best_weights= True, monitor = "val_accuracy", mode = "max")], shuffle = True)
+        history = model.fit(X, epochs = epochs, validation_data=validation_data,
+                            callbacks=[EarlyStopping(patience = patience, restore_best_weights= True, monitor = "accuracy", mode = "max")],
+                            shuffle = True)
 
     return model, history
 

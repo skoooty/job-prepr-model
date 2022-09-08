@@ -7,9 +7,11 @@ from job_prepr_model.ml_logic.params import LOCAL_DATA_PATH_HD
 
 
 #Import for HD data
-from keras.preprocessing.image_dataset import image_dataset_from_directory
+#from keras.preprocessing.image_dataset import image_dataset_from_directory
+from tensorflow.keras.preprocessing import image_dataset_from_directory
 #import tensorflow_datasets as tfds
 import numpy as np
+
 
 train_path = os.path.join(LOCAL_DATA_PATH, 'train')
 test_path = os.path.join(LOCAL_DATA_PATH, 'validation')
@@ -38,7 +40,7 @@ def load_test_data():
 
     return load_data(test_path)
 
-def load_train_data_hd():
+def load_train_data_hd(sample=None):
     training_data = image_dataset_from_directory(
         hd_path,
         labels='inferred',
@@ -47,11 +49,18 @@ def load_train_data_hd():
         image_size=(100, 100),
         validation_split=0.2,
         subset='training',
-        seed=0
+        seed=0,
+        batch_size=64
     )
-    return training_data
+    if sample:
+        ds_len = int((training_data.cardinality().numpy()*(1-sample)))
+        data = training_data.skip(ds_len)
+    else:
+        data = training_data
 
-def load_validation_data_hd():
+    return data
+
+def load_validation_data_hd(sample=None):
     validation_data = image_dataset_from_directory(
         hd_path,
         labels='inferred',
@@ -60,6 +69,13 @@ def load_validation_data_hd():
         image_size=(100, 100),
         validation_split=0.2,
         subset='validation',
-        seed=0
+        seed=0,
+        batch_size=64
     )
-    return validation_data
+    if sample:
+        ds_len = int((validation_data.cardinality().numpy()*(1-sample)))
+        data = validation_data.skip(ds_len)
+    else:
+        data = validation_data
+
+    return data

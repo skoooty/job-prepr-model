@@ -10,16 +10,20 @@ def preprocess(source_type='train'):
     pass
 
 learning_rate = 0.001
-batch_size = gridsearch_params['batch_size'][-1]
+batch_size = 64 #gridsearch_params['batch_size'][-1]
 patience = gridsearch_params['earlystopping_patience'][-1]
 validation_split = 0.2
-epochs=500
+epochs=90
 
 maxpooling2d=gridsearch_params['maxpooling2d'][-1]
 kernel_size=gridsearch_params['kernel_size'][-1]
 kernel_size_detail=gridsearch_params['kernel_size_detail'][-1]
-maxpoolinlast_dense_layer_neurons1g2d=gridsearch_params['last_dense_layer_neurons1'][-1]
-last_dense_layer_neurons2=gridsearch_params['last_dense_layer_neurons2'][-1]
+last_dense_layer_neurons1=100 #gridsearch_params['last_dense_layer_neurons1'][-1]
+last_dense_layer_neurons2=30 #gridsearch_params['last_dense_layer_neurons2'][-1]
+activation_for_hidden=gridsearch_params['activation_for_hidden'][-1]
+
+dataset_sample = 0.2
+
 
 
 def train(mode='hd'):
@@ -40,26 +44,28 @@ def train(mode='hd'):
         Xshape = (48, 48, 1)
         y_cat = label_encode(y)
     else:
-        X=load_train_data_hd()
+        X=load_train_data_hd(sample=dataset_sample)
         y_cat_len = 8
         Xshape = (100, 100, 1)
 
 
 
-    validation_data=load_validation_data_hd()
-    #
+    validation_data=load_validation_data_hd(sample=dataset_sample)
 
-    #import ipdb; ipdb.set_trace()
+
+
 
     model = initialize_model(X,y_cat_len,Xshape,
-                     maxpooling2d=2,
-                     activation_for_hidden='relu',
-                     kernel_size=(3,3),
-                     kernel_size_detail=(2,2),
-                     last_dense_layer_neurons_1=100,
-                     last_dense_layer_neurons_2=100,
+                     maxpooling2d=maxpooling2d,
+                     activation_for_hidden=activation_for_hidden,
+                     kernel_size=kernel_size,
+                     kernel_size_detail=kernel_size_detail,
+                     last_dense_layer_neurons_1=last_dense_layer_neurons1,
+                     last_dense_layer_neurons_2=last_dense_layer_neurons2,
                      )
-    model = compile_model(model, learning_rate)
+    model = compile_model(model)
+
+    #import ipdb; ipdb.set_trace()
 
     if model !='hd':
         model, history = train_model(model, X, y_cat,
@@ -70,7 +76,7 @@ def train(mode='hd'):
     else:
         model, history = train_model(model, X,
                                     batch_size=batch_size,
-                                    validation_split=validation_split,
+                                    #validation_split=validation_split,
                                     epochs=epochs,
                                     mode='hd',
                                     validation_data=validation_data
