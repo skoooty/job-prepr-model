@@ -1,0 +1,19 @@
+pandas
+numpy
+#tensorflow==2.7.0
+matplotlib
+notebook
+sklearn
+fastapi
+uvicorn
+python_dotenv
+
+ipdb
+colorama
+mlflow
+
+#for nlp
+google-cloud-speech
+transformers
+ffmpeg
+pydub
