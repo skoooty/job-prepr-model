@@ -21,10 +21,10 @@ gridsearch_params = {
     'activation_for_hidden' : ["relu", "tanh"],
     'kernel_size': [(4,4),(3, 3),(2,2)],
     'kernel_size_detail' : [(2, 2),(1,1)],
-    'last_dense_layer_neurons1' : [80, 100, 120],
-    'last_dense_layer_neurons2' : [80, 100, 120],
+    'last_dense_layer_neurons1' : [80, 100, 120]#,
+    #'last_dense_layer_neurons2' : [80, 100, 120],
     #'batch_size' : [16, 32, 64,128, 256],
-    'earlystopping_patience': [5]
+    #'earlystopping_patience': [5]
 }
 
 batch_size = int(HD_BATCH_SIZE)

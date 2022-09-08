@@ -40,6 +40,8 @@ def load_test_data():
 
     return load_data(test_path)
 
+
+
 def load_train_data_hd(sample=None):
     training_data = image_dataset_from_directory(
         hd_path,
@@ -49,14 +51,15 @@ def load_train_data_hd(sample=None):
         image_size=(100, 100),
         validation_split=0.2,
         subset='training',
+        shuffle=True,
         seed=0,
         batch_size=batch_size
     )
     if sample:
         ds_len = int((training_data.cardinality().numpy()*(1-sample)))
-        data = training_data.skip(ds_len)
+        data = training_data.skip(ds_len).prefetch(buffer_size=40000)
     else:
-        data = training_data
+        data = training_data.prefetch(buffer_size=40000)
 
     return data
 
@@ -69,13 +72,14 @@ def load_validation_data_hd(sample=None):
         image_size=(100, 100),
         validation_split=0.2,
         subset='validation',
+        shuffle=True,
         seed=0,
         batch_size=batch_size
     )
     if sample:
         ds_len = int((validation_data.cardinality().numpy()*(1-sample)))
-        data = validation_data.skip(ds_len)
+        data = validation_data.skip(ds_len).prefetch(buffer_size=40000)
     else:
-        data = validation_data
+        data = validation_data.prefetch(buffer_size=40000)
 
     return data

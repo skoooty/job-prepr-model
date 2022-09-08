@@ -6,3 +6,6 @@ run_train_sample:
 
 run_validate:
 	python -c 'from job_prepr_model.interface.main import validate; validate()'
+
+run_gridsearch:
+	python -c 'from job_prepr_model.interface.main import gridsearch_model; gridsearch_model(sample=0.2)'

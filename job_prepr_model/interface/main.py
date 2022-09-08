@@ -5,15 +5,17 @@ from colorama import Fore, Style
 
 #import "Grisearch" params
 from job_prepr_model.ml_logic.params import (gridsearch_params,batch_size)
-
+from job_prepr_model.utils.gridsearch import gridsearch_params_list
 def preprocess(source_type='train'):
     pass
 
 learning_rate = 0.001
 #batch_size = 128 #gridsearch_params['batch_size'][-1]
-patience = gridsearch_params['earlystopping_patience'][-1]
+patience = 20 #gridsearch_params['earlystopping_patience'][-1]
 validation_split = 0.2
 epochs=90
+
+
 
 maxpooling2d=gridsearch_params['maxpooling2d'][-1]
 kernel_size=gridsearch_params['kernel_size'][-1]
@@ -102,7 +104,7 @@ def train(mode='hd', sample=None):
 
     save_model(model=model, params=params, metrics=dict(mae=val_accuracy))
 
-    return val_accuracy
+    return history
 
 
 def validate():
@@ -147,6 +149,33 @@ def validate():
 
 def pred(X_pred):
     pass
+
+
+def gridsearch_model(sample=None, epochs=epochs):
+
+    gp_list = gridsearch_params_list()
+    results = {
+        'grid_params':[],
+        'history':[],
+        'val_accuracy':[]
+    }
+    for params_dict in gp_list:
+
+        maxpooling2d=params_dict['maxpooling2d']
+        kernel_size=params_dict['kernel_size']
+        kernel_size_detail=params_dict['kernel_size_detail']
+        last_dense_layer_neurons1=params_dict['last_dense_layer_neurons1']
+        activation_for_hidden=params_dict['activation_for_hidden']
+
+        results['grid_params'].append(params_dict)
+        history = train(mode='hd',sample=sample)
+        results['history'].append(history)
+        val_accuracy = validate()
+        results['val_accuracy'].append(val_accuracy)
+
+    return results
+
+
 
 if __name__ == '__main__':
     #preprocess()
