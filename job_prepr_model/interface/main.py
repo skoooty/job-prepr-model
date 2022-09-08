@@ -10,7 +10,7 @@ def preprocess(source_type='train'):
     pass
 
 learning_rate = 0.001
-batch_size = gridsearch_params['batch_size'][-1]
+batch_size = 64 #gridsearch_params['batch_size'][-1]
 patience = gridsearch_params['earlystopping_patience'][-1]
 validation_split = 0.2
 epochs=90
@@ -21,8 +21,9 @@ kernel_size_detail=gridsearch_params['kernel_size_detail'][-1]
 last_dense_layer_neurons1=100 #gridsearch_params['last_dense_layer_neurons1'][-1]
 last_dense_layer_neurons2=30 #gridsearch_params['last_dense_layer_neurons2'][-1]
 activation_for_hidden=gridsearch_params['activation_for_hidden'][-1]
-train_sample = None
-val_sample = None
+
+dataset_sample = 0.2
+
 
 
 def train(mode='hd'):
@@ -43,14 +44,14 @@ def train(mode='hd'):
         Xshape = (48, 48, 1)
         y_cat = label_encode(y)
     else:
-        X=load_train_data_hd(sample=train_sample)
+        X=load_train_data_hd(sample=dataset_sample)
         y_cat_len = 8
         Xshape = (100, 100, 1)
 
 
 
-    validation_data=load_validation_data_hd(sample=val_sample)
-    #
+    validation_data=load_validation_data_hd(sample=dataset_sample)
+
 
 
 

@@ -49,10 +49,12 @@ def load_train_data_hd(sample=None):
         image_size=(100, 100),
         validation_split=0.2,
         subset='training',
-        seed=0
+        seed=0,
+        batch_size=64
     )
     if sample:
-        data = training_data.take(3000)
+        ds_len = int((training_data.cardinality().numpy()*(1-sample)))
+        data = training_data.skip(ds_len)
     else:
         data = training_data
 
@@ -65,12 +67,14 @@ def load_validation_data_hd(sample=None):
         label_mode='categorical',
         color_mode='grayscale',
         image_size=(100, 100),
-        validation_split=0.4,
+        validation_split=0.2,
         subset='validation',
-        seed=0
+        seed=0,
+        batch_size=64
     )
     if sample:
-        data = validation_data.take(sample)
+        ds_len = int((validation_data.cardinality().numpy()*(1-sample)))
+        data = validation_data.skip(ds_len)
     else:
         data = validation_data
 
