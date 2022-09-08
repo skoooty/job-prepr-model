@@ -22,9 +22,11 @@ gridsearch_params = {
     'kernel_size_detail' : [(2, 2),(1,1)],
     'last_dense_layer_neurons1' : [80, 100, 120],
     'last_dense_layer_neurons2' : [80, 100, 120],
-    'batch_size' : [16, 32, 64,128, 256],
+    #'batch_size' : [16, 32, 64,128, 256],
     'earlystopping_patience': [5]
 }
+
+batch_size = 128
 
 y_label_dict = {
     'angry':0,

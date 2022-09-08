@@ -4,13 +4,13 @@ import pandas as pd
 from colorama import Fore, Style
 
 #import "Grisearch" params
-from job_prepr_model.ml_logic.params import gridsearch_params
+from job_prepr_model.ml_logic.params import (gridsearch_params,batch_size)
 
 def preprocess(source_type='train'):
     pass
 
 learning_rate = 0.001
-batch_size = 64 #gridsearch_params['batch_size'][-1]
+#batch_size = 128 #gridsearch_params['batch_size'][-1]
 patience = gridsearch_params['earlystopping_patience'][-1]
 validation_split = 0.2
 epochs=90

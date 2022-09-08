@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 from keras.preprocessing.image import load_img, img_to_array
 import os
-from job_prepr_model.ml_logic.params import LOCAL_DATA_PATH
+from job_prepr_model.ml_logic.params import (LOCAL_DATA_PATH, LOCAL_DATA_PATH_HD, batch_size)
 from job_prepr_model.ml_logic.params import LOCAL_DATA_PATH_HD
 
 
@@ -50,7 +50,7 @@ def load_train_data_hd(sample=None):
         validation_split=0.2,
         subset='training',
         seed=0,
-        batch_size=64
+        batch_size=batch_size
     )
     if sample:
         ds_len = int((training_data.cardinality().numpy()*(1-sample)))
@@ -70,7 +70,7 @@ def load_validation_data_hd(sample=None):
         validation_split=0.2,
         subset='validation',
         seed=0,
-        batch_size=64
+        batch_size=batch_size
     )
     if sample:
         ds_len = int((validation_data.cardinality().numpy()*(1-sample)))
