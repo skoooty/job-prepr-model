@@ -52,7 +52,7 @@ def train(mode='hd'):
     validation_data=load_validation_data_hd(sample=val_sample)
     #
 
-    #import ipdb; ipdb.set_trace()
+
 
     model = initialize_model(X,y_cat_len,Xshape,
                      maxpooling2d=maxpooling2d,
@@ -63,6 +63,8 @@ def train(mode='hd'):
                      last_dense_layer_neurons_2=last_dense_layer_neurons2,
                      )
     model = compile_model(model)
+
+    import ipdb; ipdb.set_trace()
 
     if model !='hd':
         model, history = train_model(model, X, y_cat,
