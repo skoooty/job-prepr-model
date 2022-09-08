@@ -13,6 +13,7 @@ colorama
 mlflow
 
 #for nlp
+google-cloud-storage
 google-cloud-speech
 transformers
 ffmpeg
