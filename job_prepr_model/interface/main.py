@@ -59,7 +59,7 @@ def train(mode='hd'):
                      last_dense_layer_neurons_1=100,
                      last_dense_layer_neurons_2=100,
                      )
-    model = compile_model(model, learning_rate)
+    model = compile_model(model)
 
     if model !='hd':
         model, history = train_model(model, X, y_cat,
