@@ -21,10 +21,6 @@ from google.cloud import storage
 # test_path = os.path.join(LOCAL_DATA_PATH, 'validation')
 # #val_path = "~/code/images/images/val"
 
-print(gcs
-
-
-
 def get(self):
   bucket_name = os.environ.get('BUCKET_NAME',
                                app_identity.get_default_gcs_bucket_name())
