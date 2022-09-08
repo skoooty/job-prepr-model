@@ -73,7 +73,8 @@ def train_model(model,
                 validation_split = validation_split, shuffle = True, verbose = 1)
     else:
         history = model.fit(X, epochs = epochs, validation_data=validation_data,
-      callbacks=[EarlyStopping(patience = patience, restore_best_weights= True, monitor = "val_accuracy", mode = "max")], shuffle = True)
+                            callbacks=[EarlyStopping(patience = patience, restore_best_weights= True, monitor = "accuracy", mode = "max")],
+                            shuffle = True)
 
     return model, history
 

@@ -20,7 +20,7 @@ kernel_size=gridsearch_params['kernel_size'][-1]
 kernel_size_detail=gridsearch_params['kernel_size_detail'][-1]
 last_dense_layer_neurons1=100 #gridsearch_params['last_dense_layer_neurons1'][-1]
 last_dense_layer_neurons2=30 #gridsearch_params['last_dense_layer_neurons2'][-1]
-
+activation_for_hidden=gridsearch_params['activation_for_hidden'][-1]
 train_sample = None
 val_sample = None
 
@@ -56,7 +56,7 @@ def train(mode='hd'):
 
     model = initialize_model(X,y_cat_len,Xshape,
                      maxpooling2d=maxpooling2d,
-                     activation_for_hidden='relu',
+                     activation_for_hidden=activation_for_hidden,
                      kernel_size=kernel_size,
                      kernel_size_detail=kernel_size_detail,
                      last_dense_layer_neurons_1=last_dense_layer_neurons1,
@@ -64,7 +64,7 @@ def train(mode='hd'):
                      )
     model = compile_model(model)
 
-    import ipdb; ipdb.set_trace()
+    #import ipdb; ipdb.set_trace()
 
     if model !='hd':
         model, history = train_model(model, X, y_cat,
