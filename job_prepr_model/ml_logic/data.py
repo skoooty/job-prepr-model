@@ -51,7 +51,7 @@ def load_train_data_hd(sample=None):
         image_size=(100, 100),
         validation_split=0.2,
         subset='training',
-        shuffle=True,
+        #shuffle=True, 
         seed=0,
         batch_size=batch_size
     )
@@ -72,7 +72,7 @@ def load_validation_data_hd(sample=None):
         image_size=(100, 100),
         validation_split=0.2,
         subset='validation',
-        shuffle=True,
+        #shuffle=True,
         seed=0,
         batch_size=batch_size
     )

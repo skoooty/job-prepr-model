@@ -13,15 +13,15 @@ def preprocess(source_type='train'):
 #batch_size = 128 #gridsearch_params['batch_size'][-1]
 patience = 20 #gridsearch_params['earlystopping_patience'][-1]
 validation_split = 0.2
-epochs=90
+epochs=500
 
 
 
 maxpooling2d=gridsearch_params['maxpooling2d'][-1]
-kernel_size=gridsearch_params['kernel_size'][-1]
+kernel_size= gridsearch_params['kernel_size'][-1]
 kernel_size_detail=gridsearch_params['kernel_size_detail'][-1]
-last_dense_layer_neurons1=100 #gridsearch_params['last_dense_layer_neurons1'][-1]
-last_dense_layer_neurons2=30 #gridsearch_params['last_dense_layer_neurons2'][-1]
+last_dense_layer_neurons1=gridsearch_params['last_dense_layer_neurons1'][-1]
+last_dense_layer_neurons2=gridsearch_params['last_dense_layer_neurons2'][-1]
 activation_for_hidden=gridsearch_params['activation_for_hidden'][-1]
 
 
