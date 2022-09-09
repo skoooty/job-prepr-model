@@ -4,12 +4,12 @@ import pandas as pd
 from colorama import Fore, Style
 
 #import "Grisearch" params
-from job_prepr_model.ml_logic.params import (gridsearch_params,batch_size)
+from job_prepr_model.ml_logic.params import (gridsearch_params,batch_size, learning_rate)
 from job_prepr_model.utils.gridsearch import gridsearch_params_list
 def preprocess(source_type='train'):
     pass
 
-learning_rate = 0.001
+
 #batch_size = 128 #gridsearch_params['batch_size'][-1]
 patience = 20 #gridsearch_params['earlystopping_patience'][-1]
 validation_split = 0.2
@@ -68,7 +68,7 @@ def train(mode='hd', sample=None):
                      last_dense_layer_neurons_1=last_dense_layer_neurons1,
                      last_dense_layer_neurons_2=last_dense_layer_neurons2,
                      )
-    model = compile_model(model)
+    model = compile_model(model, learning_rate=None)
 
     #import ipdb; ipdb.set_trace()
 

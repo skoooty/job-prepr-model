@@ -14,6 +14,8 @@ PREFECT_LOG_LEVEL=os.environ.get("PREFECT_LOG_LEVEL")
 PREFECT_PROJECT_NAME=os.environ.get("PREFECT_PROJECT_NAME")
 HD_BATCH_SIZE=os.environ.get("HD_BATCH_SIZE")
 
+
+
 gridsearch_params = {
     # total number of combinations: 1296
     #optimizer : ["adam"],
@@ -28,6 +30,7 @@ gridsearch_params = {
 }
 
 batch_size = int(HD_BATCH_SIZE)
+learning_rate = 0.001 #change to lr_schedule to use schedule from model
 
 y_label_dict = {
     'angry':0,
