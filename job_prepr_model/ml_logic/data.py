@@ -57,9 +57,9 @@ def load_train_data_hd(sample=None):
     )
     if sample:
         ds_len = int((training_data.cardinality().numpy()*(1-sample)))
-        data = training_data.skip(ds_len).prefetch(buffer_size=40000)
+        data = training_data.skip(ds_len).cache().prefetch(8)
     else:
-        data = training_data.prefetch(buffer_size=40000)
+        data = training_data.cache().prefetch(8)
 
     return data
 
@@ -78,8 +78,8 @@ def load_validation_data_hd(sample=None):
     )
     if sample:
         ds_len = int((validation_data.cardinality().numpy()*(1-sample)))
-        data = validation_data.skip(ds_len).prefetch(buffer_size=40000)
+        data = validation_data.skip(ds_len).cache().prefetch(8)
     else:
-        data = validation_data.prefetch(buffer_size=40000)
+        data = validation_data.cache().prefetch(8)
 
     return data

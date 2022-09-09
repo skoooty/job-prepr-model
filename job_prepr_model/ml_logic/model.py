@@ -48,13 +48,15 @@ lr_schedule = ExponentialDecay(
     decay_steps=10000,
     decay_rate=0.9)
 
-adam_optimizer = Adam(learning_rate=lr_schedule)
-
-def compile_model(model):
-   model.compile(loss='categorical_crossentropy',
-              optimizer=adam_optimizer,
+def compile_model(model, learning_rate=None):
+    
+    if learning_rate:
+        lr_schedule==learning_rate
+        
+    model.compile(loss='categorical_crossentropy',
+              optimizer=Adam(learning_rate=lr_schedule),
               metrics=['accuracy'])
-   return model
+    return model
 
 def train_model(model,
                 X,
