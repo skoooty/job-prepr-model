@@ -50,7 +50,7 @@ def train_model(model,
                 X,
                 y=None,
                 batch_size=64,
-                patience = 2,
+                patience = 20,
                 validation_split=0.2,
                 epochs=500,
                 mode='hd',
@@ -62,7 +62,7 @@ def train_model(model,
                 callbacks=[EarlyStopping(patience = patience, restore_best_weights= True, monitor = "val_accuracy", mode = "max")],
                 validation_split = validation_split, shuffle = True, verbose = 1)
     else:
-        model.fit(X, epochs = epochs, validation_data=validation_data,
+        history = model.fit(X, epochs = epochs, validation_data=validation_data,
       callbacks=[EarlyStopping(patience = patience, restore_best_weights= True, monitor = "val_accuracy", mode = "max")], shuffle = True)
 
     return model, history
