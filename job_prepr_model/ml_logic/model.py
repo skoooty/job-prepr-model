@@ -48,7 +48,7 @@ def compile_model(model, learning_rate=0.01):
 
 def train_model(model,
                 X,
-                y,
+                y=None,
                 batch_size=64,
                 patience = 2,
                 validation_split=0.2,

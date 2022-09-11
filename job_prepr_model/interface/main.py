@@ -61,7 +61,7 @@ def train(mode='hd'):
                      )
     model = compile_model(model, learning_rate)
 
-    if model !='hd':
+    if mode !='hd':
         model, history = train_model(model, X, y_cat,
                                     batch_size=batch_size,
                                     validation_split=validation_split,
