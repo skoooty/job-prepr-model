@@ -7,7 +7,8 @@ from job_prepr_model.ml_logic.params import LOCAL_DATA_PATH_HD
 
 
 #Import for HD data
-from keras.preprocessing.image_dataset import image_dataset_from_directory
+#from keras.preprocessing.image_dataset import image_dataset_from_directory
+from tensorflow.keras.preprocessing import image_dataset_from_directory
 #import tensorflow_datasets as tfds
 import numpy as np
 
@@ -47,7 +48,11 @@ def load_train_data_hd():
         image_size=(100, 100),
         validation_split=0.2,
         subset='training',
+        #batch_size=64,
+        #shuffle = True,
         seed=0
+        
+        
     )
     return training_data
 
@@ -60,6 +65,9 @@ def load_validation_data_hd():
         image_size=(100, 100),
         validation_split=0.2,
         subset='validation',
-        seed=0
+        #batch_size=64,
+        #shuffle = True
+        seed=0,
+                
     )
     return validation_data

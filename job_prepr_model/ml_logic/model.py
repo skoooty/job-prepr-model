@@ -1,6 +1,8 @@
 from tensorflow.keras.layers.experimental.preprocessing import Rescaling
 from tensorflow.keras import layers, models
 from tensorflow.keras.callbacks import EarlyStopping
+from tensorflow.keras.optimizers.schedules import ExponentialDecay
+from tensorflow.keras.optimizers import Adam    
 
 
 
@@ -40,11 +42,20 @@ def initialize_model(X,y_cat_len,
     model.add(layers.Dense(y_cat_len, activation='softmax'))
     return model
 
-def compile_model(model, learning_rate=0.01):
-   model.compile(loss='categorical_crossentropy',
-              optimizer='adam',
-              metrics=['accuracy'])
-   return model
+def compile_model(model, learning_rate=None):
+    lr_schedule = ExponentialDecay(initial_learning_rate=1e-2,
+                                       decay_steps=10000,
+                                       decay_rate=0.9
+                                       )
+    
+    if learning_rate:
+        lr_schedule=learning_rate
+        
+    model.compile(loss='categorical_crossentropy',
+          optimizer=Adam(learning_rate=lr_schedule),
+          metrics=['accuracy']
+          )
+    return model
 
 def train_model(model,
                 X,
