@@ -54,7 +54,7 @@ def compile_model(model, learning_rate=None):
         lr_schedule==learning_rate
         
     model.compile(loss='categorical_crossentropy',
-              optimizer=Adam(learning_rate=lr_schedule),
+              optimizer=Adam(learning_rate=0.001),#lr_schedule),
               metrics=['accuracy'])
     return model
 
