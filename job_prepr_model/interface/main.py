@@ -6,12 +6,13 @@ from colorama import Fore, Style
 #import "Grisearch" params
 from job_prepr_model.ml_logic.params import (gridsearch_params,batch_size, learning_rate)
 from job_prepr_model.utils.gridsearch import gridsearch_params_list
+import time 
 def preprocess(source_type='train'):
     pass
 
 
 #batch_size = 128 #gridsearch_params['batch_size'][-1]
-patience = 20 #gridsearch_params['earlystopping_patience'][-1]
+patience = 5 #gridsearch_params['earlystopping_patience'][-1]
 validation_split = 0.2
 epochs=90
 
@@ -172,9 +173,14 @@ def gridsearch_model(sample=None, epochs=epochs):
         results['history'].append(history)
         val_accuracy = validate()
         results['val_accuracy'].append(val_accuracy)
-
+    
+    timestamp = time.strftime("%Y%m%d-%H%M%S")
+    np.save(f'results{timestamp}.npy',results)    
+    
     return results
 
+    
+    
 
 
 if __name__ == '__main__':
